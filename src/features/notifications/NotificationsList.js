@@ -10,6 +10,10 @@ export const NotificationsList = () => {
   const notifications = useSelector(selectAllNotifications)
   const users = useSelector(selectAllUsers)
 
+  if(!notifications){
+    return <h2>No notifications yet.</h2>
+  }
+
   const renderedNotifications = notifications.map(notification => {
     const date = parseISO(notification.date)
     const timeAgo = formatDistanceToNow(date)

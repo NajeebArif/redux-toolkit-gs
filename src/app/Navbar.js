@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom'
 import { fetchNotifications } from '../features/notifications/notificationsSlice'
 
 export const Navbar = () => {
-  const dispatch = useDispatch();
-  const fetchNewNotifications = () =>{
+
+  const dispatch = useDispatch()
+
+  const fetchNewNotifications = () => {
     dispatch(fetchNotifications())
   }
 
