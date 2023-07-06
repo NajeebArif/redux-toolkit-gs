@@ -1,14 +1,20 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, {useLayoutEffect} from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { formatDistanceToNow, parseISO } from 'date-fns'
 
 import { selectAllUsers } from '../users/userSlice'
 
-import { selectAllNotifications } from './notificationsSlice'
+import { selectAllNotifications, allNotificationsRead } from './notificationsSlice'
+import classnames from 'classnames'
 
 export const NotificationsList = () => {
+    const dispatch = useDispatch();
   const notifications = useSelector(selectAllNotifications)
   const users = useSelector(selectAllUsers)
+
+  useLayoutEffect(() => {
+    dispatch(allNotificationsRead())
+  })
 
   if(!notifications){
     return <h2>No notifications yet.</h2>
@@ -21,8 +27,12 @@ export const NotificationsList = () => {
       name: 'Unknown User'
     }
 
+    const notificationClassname = classnames('notification', {
+        new: notification.isNew
+      })
+
     return (
-      <div key={notification.id} className="notification">
+      <div key={notification.id} className={notificationClassname}>
         <div>
           <b>{user.name}</b> {notification.message}
         </div>
